@@ -13,7 +13,8 @@
     <p><b>Course:</b> ${course}</p>
 
     <br>
-    <a href="index.jsp">Go Home</a>
+    <a href="register.jsp">Register Another Student</a> |
+    <a href="viewAll.jsp">View All Students</a>
 </div>
 </body>
 </html>
