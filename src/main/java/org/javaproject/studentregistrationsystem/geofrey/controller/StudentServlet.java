@@ -1,9 +1,8 @@
 package org.javaproject.studentregistrationsystem.geofrey.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
+import org.javaproject.studentregistrationsystem.geofrey.config.HibernateUtil;
 import org.javaproject.studentregistrationsystem.geofrey.model.Student;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -11,12 +10,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.ServletContext;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @WebServlet("/register")
 public class StudentServlet extends HttpServlet {
 
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -31,24 +32,36 @@ public class StudentServlet extends HttpServlet {
             return;
         }
 
-        // Create student object
-        Student student = new Student(name, regNo, course);
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
 
-        // Get the list from ServletContext (application scope)
-        ServletContext context = getServletContext();
-        List<Student> studentList = (List<Student>) context.getAttribute("students");
+        try {
+            tx = session.beginTransaction();
 
-        if (studentList == null) {
-            studentList = new ArrayList<>();
-            context.setAttribute("students", studentList);
+            // Check if regNo already exists
+            Query<Student> query = session.createQuery("FROM Student WHERE regNo = :reg", Student.class);
+            query.setParameter("reg", regNo);
+            if (!query.list().isEmpty()) {
+                request.setAttribute("error", "Registration number already exists!");
+                RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
+                rd.forward(request, response);
+                return;
+            }
+
+            // Save new student
+            Student student = new Student(name, regNo, course);
+            session.save(student);
+
+            tx.commit();
+            request.setAttribute("student", student);
+            RequestDispatcher rd = request.getRequestDispatcher("success.jsp");
+            rd.forward(request, response);
+
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
-
-        // Add new student
-        studentList.add(student);
-
-        // Forward to success page
-        request.setAttribute("student", student);
-        RequestDispatcher rd = request.getRequestDispatcher("success.jsp");
-        rd.forward(request, response);
     }
 }
