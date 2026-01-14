@@ -50,7 +50,7 @@ public class StudentServlet extends HttpServlet {
 
             // Save new student
             Student student = new Student(name, regNo, course);
-            session.save(student);
+            session.persist(student);
 
             tx.commit();
             request.setAttribute("student", student);
