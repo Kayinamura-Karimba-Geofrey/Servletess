@@ -7,14 +7,15 @@ body {
     text-align: center;
 }
 
-/* Container for forms */
+/* Container for forms and tables */
 .container {
     background-color: #fff;
-    width: 400px;
+    width: 500px;
+    max-width: 90%;
     margin: 50px auto;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
 
 /* Headings */
@@ -30,6 +31,7 @@ input[type="text"], input[type="submit"] {
     margin: 10px 0;
     border-radius: 5px;
     border: 1px solid #ccc;
+    font-size: 16px;
 }
 
 /* Submit button */
@@ -38,25 +40,55 @@ input[type="submit"] {
     color: white;
     border: none;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 input[type="submit"]:hover {
     background-color: #45a049;
 }
 
-/* Error message */
-/*.error {*/
-/*    color: red;*/
-/*    font-weight: bold;*/
-/*    margin-bottom: 15px;*/
-/*}*/
+/* Error messages */
+.error {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
 
 /* Links */
 a {
     text-decoration: none;
     color: #4CAF50;
+    margin: 0 10px;
 }
 
 a:hover {
     text-decoration: underline;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #e8f5e9;
 }

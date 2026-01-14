@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>All Students</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/syle.css">
 </head>
 <body>
 <div class="container">
