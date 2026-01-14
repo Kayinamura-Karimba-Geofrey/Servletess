@@ -1,52 +1,49 @@
-<%@ page
-    import="java.util.*, org.hibernate.Session, org.javaproject.studentregistrationsystem.geofrey.config.HibernateUtil, org.javaproject.studentregistrationsystem.geofrey.model.Student"
+<%@ page import="java.util.List" %>
+<%@ page import="org.javaproject.studentregistrationsystem.geofrey.model.Student" %>
+<%@ page import="org.javaproject.studentregistrationsystem.geofrey.dao.StudentDAO" %>
+<%@ page session="true" %>
+
+<%
+    Student loggedStudent = (Student) session.getAttribute("loggedStudent");
+    if (loggedStudent == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+
+    StudentDAO dao = new StudentDAO();
+    List<Student> students = dao.getAllStudents();
+%>
+
+<html>
+<head>
+    <title>All Registered Students</title>
+</head>
+<body>
+<h2>Welcome, <%= loggedStudent.getName() %>!</h2>
+<h3>All Registered Students</h3>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Registration Number</th>
+        <th>Email</th>
+    </tr>
+    <%
+        for (Student s : students) {
     %>
-    <!DOCTYPE html>
-    <html>
+    <tr>
+        <td><%= s.getId() %></td>
+        <td><%= s.getName() %></td>
+        <td><%= s.getRegNo() %></td>
 
-    <head>
-        <title>All Students</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-    </head>
+    </tr>
+    <%
+        }
+    %>
+</table>
 
-    <body>
-        <div class="container">
-            <h2>All Registered Students</h2>
-
-            <% Session hibernateSession=HibernateUtil.getSessionFactory().openSession(); List<Student> students =
-                hibernateSession.createQuery("FROM Student", Student.class).list();
-                hibernateSession.close();
-
-                if (students.isEmpty()) {
-                %>
-                <p>No students registered yet.</p>
-                <% } else { %>
-                    <table border="1">
-                        <tr>
-                            <th>Name</th>
-                            <th>Reg No</th>
-                            <th>Course</th>
-                        </tr>
-                        <% for(Student s : students) { %>
-                            <tr>
-                                <td>
-                                    <%= s.getName() %>
-                                </td>
-                                <td>
-                                    <%= s.getRegNo() %>
-                                </td>
-                                <td>
-                                    <%= s.getCourse() %>
-                                </td>
-                            </tr>
-                            <% } %>
-                    </table>
-                    <% } %>
-
-                        <br>
-                        <a href="register.jsp">Register Another Student</a> |
-                        <a href="index.jsp">Go Home</a>
-        </div>
-    </body>
-
-    </html>
+<a href="logout.jsp">Logout</a>
+</body>
+</html>
