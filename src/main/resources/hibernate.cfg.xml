@@ -17,6 +17,8 @@
         <!-- Show SQL in console -->
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
+        <!-- Disable Bean Validation integration -->
+        <property name="jakarta.persistence.validation.mode">none</property>
         <property name="hibernate.validator.apply_to_ddl">false</property>
         <property name="hibernate.validator.autoregister_listeners">false</property>
 

@@ -19,15 +19,15 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String firstName = request.getParameter("firstName");
-        String regNumber = request.getParameter("regNumber");
+        String name = request.getParameter("firstName"); // Mapping 'firstName' label from JSP to 'name'
+        String regNo = request.getParameter("regNumber"); // Mapping 'regNumber' label from JSP to 'regNo'
 
-        Student student = studentDAO.login(firstName, regNumber);
+        Student student = studentDAO.login(name, regNo);
 
         if (student != null) {
             HttpSession session = request.getSession();
             session.setAttribute("loggedStudent", student);
-            response.sendRedirect("viewStudents.jsp");
+            response.sendRedirect("viewAll.jsp");
         } else {
             request.setAttribute("error", "Invalid name or registration number");
             request.getRequestDispatcher("login.jsp").forward(request, response);

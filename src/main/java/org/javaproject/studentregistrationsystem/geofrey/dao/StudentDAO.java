@@ -7,12 +7,12 @@ import org.javaproject.studentregistrationsystem.geofrey.model.Student;
 
 public class StudentDAO {
 
-    public Student login(String firstName, String registrationNumber) {
+    public Student login(String name, String regNo) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM Student s WHERE s.firstName = :fname AND s.registrationNumber = :regNum";
+            String hql = "FROM Student s WHERE s.name = :name AND s.regNo = :regNo";
             Query<Student> query = session.createQuery(hql, Student.class);
-            query.setParameter("fname", firstName);
-            query.setParameter("regNum", registrationNumber);
+            query.setParameter("name", name);
+            query.setParameter("regNo", regNo);
             return query.uniqueResult(); // returns null if no match
         } catch (Exception e) {
             e.printStackTrace();

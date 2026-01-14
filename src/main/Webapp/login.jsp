@@ -1,23 +1,27 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Student Login</title>
-</head>
-<body>
-<h2>Student Login</h2>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <html>
 
-<c:if test="${not empty error}">
-    <p style="color:red;">${error}</p>
-</c:if>
+        <head>
+            <title>Student Login</title>
+        </head>
 
-<form method="post" action="login">
-    <label>First Name:</label>
-    <input type="text" name="firstName" required><br><br>
+        <body>
+            <h2>Student Login</h2>
 
-    <label>Registration Number:</label>
-    <input type="text" name="regNumber" required><br><br>
+            <c:if test="${not empty error}">
+                <p style="color:red;">${error}</p>
+            </c:if>
 
-    <input type="submit" value="Login">
-</form>
-</body>
-</html>
+            <form method="post" action="login">
+                <label>Name:</label>
+                <input type="text" name="firstName" required><br><br>
+
+                <label>Registration Number:</label>
+                <input type="text" name="regNumber" required><br><br>
+
+                <input type="submit" value="Login">
+            </form>
+        </body>
+
+        </html>
