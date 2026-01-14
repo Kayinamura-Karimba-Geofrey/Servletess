@@ -12,8 +12,6 @@ public class Student {
         this.regNo = regNo;
         this.course = course;
     }
-
-
     public String getName() { return name; }
     public String getRegNo() { return regNo; }
     public String getCourse() { return course; }
