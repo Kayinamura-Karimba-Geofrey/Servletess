@@ -38,7 +38,7 @@ public class StudentServlet extends HttpServlet {
         try {
             tx = session.beginTransaction();
 
-            // Check if regNo already exists
+
             Query<Student> query = session.createQuery("FROM Student WHERE regNo = :reg", Student.class);
             query.setParameter("reg", regNo);
             if (!query.list().isEmpty()) {
